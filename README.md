@@ -12,10 +12,10 @@ The project features a Convolutional Neural Network (CNN) architecture to extrac
 - **Trade-off Analysis**: The project trains the model using different sparsity penalties ($\lambda$) to evaluate the trade-off between compression (sparsity) and Test Accuracy.
 
 ## Results
-By increasing the $\lambda$ penalty, the network successfully prunes up to 99.78% of its connections with a manageable drop in accuracy.
-- **$\lambda = 0.0$**: Baseline (0% Sparsity, 53.1% Acc)
-- **$\lambda = 0.0001$**: 95.27% Sparsity, 50.9% Acc
-- **$\lambda = 0.001$**: 99.78% Sparsity, 44.0% Acc
+By increasing the $\lambda$ penalty, the network successfully prunes up to 98.86% of its connections with a manageable drop in accuracy.
+- **$\lambda = 0.0$**: Baseline (0% Sparsity, 71.70% Acc)
+- **$\lambda = 0.0001$**: 86.51% Sparsity, 67.78% Acc
+- **$\lambda = 0.001$**: 98.86% Sparsity, 66.15% Acc
 
 Please see `report.md` for a full analysis and visual plots of the gate distributions.
 

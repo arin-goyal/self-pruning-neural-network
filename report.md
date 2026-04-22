@@ -18,9 +18,9 @@ We trained the `PrunableNet` on CIFAR-10 for 5 epochs using three different valu
 
 | Lambda ($\lambda$) | Test Accuracy | Sparsity Level (%) |
 | :--- | :--- | :--- |
-| 0.0 | 53.14% | 0.00% |
-| 0.0001 | 50.90% | 95.27% |
-| 0.001 | 44.00% | 99.78% |
+| 0.0 | 71.70% | 0.00% |
+| 0.0001 | 67.78% | 86.51% |
+| 0.001 | 66.15% | 98.86% |
 
 *Note: Sparsity Level is defined as the percentage of gates with a value less than $0.01$.*
 
