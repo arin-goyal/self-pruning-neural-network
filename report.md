@@ -14,7 +14,7 @@ The hyperparameter $\lambda$ controls how strong this pushing force is compared 
 
 ## 2. Experimental Results
 
-We trained the `PrunableNet` on CIFAR-10 for 5 epochs using three different values for the sparsity penalty ($\lambda$).
+We trained the `PrunableNet` on CIFAR-10 for 5 epochs using three different values for the sparsity penalty ($\lambda$). The network utilizes `Conv2d` and `BatchNorm2d` layers for initial feature extraction, followed by our custom `PrunableLinear` dense layers where the pruning occurs.
 
 | Lambda ($\lambda$) | Test Accuracy | Sparsity Level (%) |
 | :--- | :--- | :--- |

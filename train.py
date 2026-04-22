@@ -98,24 +98,31 @@ class PrunableLinear(nn.Module):
 class PrunableNet(nn.Module):
     def __init__(self):
         super(PrunableNet, self).__init__()
-        # CIFAR-10 images are 3 channels, 32x32 pixels
-        # Flattened size = 3 * 32 * 32 = 3072
+        # Convolutional feature extractors (standard, not prunable)
+        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
+        self.bn1 = nn.BatchNorm2d(16)
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=3, padding=1)
+        self.bn2 = nn.BatchNorm2d(32)
+        self.pool = nn.MaxPool2d(2, 2)
         
-        # We use our custom PrunableLinear instead of standard nn.Linear
-        self.fc1 = PrunableLinear(3072, 512)
-        self.fc2 = PrunableLinear(512, 256)
-        self.fc3 = PrunableLinear(256, 10) # 10 output classes for CIFAR-10
+        # After two 2x2 pools, the 32x32 image becomes 8x8.
+        # We have 32 channels, so flattened size = 32 * 8 * 8 = 2048
+        
+        # We use our custom PrunableLinear for the dense layers!
+        self.fc1 = PrunableLinear(2048, 256)
+        self.fc2 = PrunableLinear(256, 10)
 
     def forward(self, x):
-        # Flatten the image: (batch_size, 3, 32, 32) -> (batch_size, 3072)
+        # Convolutional layers
+        x = self.pool(torch.relu(self.bn1(self.conv1(x))))
+        x = self.pool(torch.relu(self.bn2(self.conv2(x))))
+        
+        # Flatten the feature maps
         x = x.view(x.size(0), -1)
         
-        # Pass through layers with ReLU activations
+        # Pass through our prunable linear layers
         x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        
-        # Output layer (no activation here, CrossEntropyLoss handles softmax)
-        x = self.fc3(x)
+        x = self.fc2(x)
         return x
 
 # Instantiate the model and move it to the configured device
